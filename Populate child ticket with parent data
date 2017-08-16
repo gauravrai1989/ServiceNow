@@ -1,0 +1,14 @@
+My mind isn't recalling exactly what I did here but if you are trying to populate a child ticket with parent ticket information the following should help...
+function onDisplay(current, g_scratchpad) {
+  if (current.isNewRecord()){
+  //gs.addErrorMessage(current.parent);
+ 
+  var caseRec = new GlideRecord('PARENT TABLE NAME');
+  caseRec.addQuery('sys_id', current.parent);
+  caseRec.query();
+ 
+  if (caseRec.hasNext()){
+  current.FIELD NAME = current.parent.FIELD NAME;
+  }
+  }
+}
