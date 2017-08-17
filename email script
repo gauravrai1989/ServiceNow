@@ -1,0 +1,48 @@
+var users = [];
+
+var count = new GlideAggregate('sys_user');
+count.addQuery('email', '!=', '');
+count.groupBy('email');
+count.addAggregate('COUNT');
+count.query();
+while (count.next()) {
+  if ((count.getAggregate('COUNT') * 1) > 0) {
+      users.push(count.email + '');
+  }
+}
+
+var user = new GlideRecord('sys_user');
+var prevUser = '';
+user.addQuery('email', 'IN', users.join(','));
+user.orderBy('email');
+user.query();
+while (user.next()) {
+  if (prevUser == user.email + '') {
+    gs.print(user.email);
+  }
+  // Else, skip the original user
+  prevUser = user.email + '';
+}
+
+
+
+Second one for mail and poplulate user id .
+
+
+
+var count = new GlideAggregate('sys_user');
+count.addQuery('email', '!=', '');
+count.groupBy('email');
+count.addAggregate('COUNT');
+count.query();
+while (count.next()) {
+  if ((count.getAggregate('COUNT') * 1) > 0) {
+    var user = new GlideRecord('sys_user');
+    user.addQuery('email', count.email + '');
+    user.query();
+    user.next(); // skip the first
+    while (user.next()) {
+      gs.print(user.sys_id);
+    }
+  }
+}
