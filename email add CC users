@@ -1,3 +1,5 @@
+ Note : For more details you follow link "https://docs.servicenow.com/bundle/geneva-servicenow-platform/page/script/server_scripting/reference/r_ExScptEmlNtfn.html" 
+ 
  Adding CC and BCC Recipients
  
 You can specify copied and blind copied recipients by using the email object within a mail script.
