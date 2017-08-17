@@ -1,0 +1,24 @@
+ Adding CC and BCC Recipients
+ 
+You can specify copied and blind copied recipients by using the email object within a mail script.
+
+    //email.addAddress(type, address, displayname);
+    email.addAddress("cc", "john.copy@example.com","John Roberts");
+    email.addAddress("bcc", "john.secret@example.com","John Roberts");
+The following is an example script to add users from watch_list as copied recipients.
+if (!current.watch_list.nil()) {
+   //get watch list addresses and add to cc
+   var watcherIds = current.watch_list.split(",");
+ 
+   //get user records
+   var user = new GlideRecord("sys_user");
+   user.addQuery("sys_id", watcherIds);
+   user.addQuery("notification", 2); //email
+   user.addQuery("email", "!=", "");
+   user.query();
+ 
+   while (user.next()) {
+      //add to cc list    
+      email.addAddress("cc", user.email, user.getDisplayValue());
+   }
+}
